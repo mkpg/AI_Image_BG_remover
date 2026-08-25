@@ -14,11 +14,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load the model session once on startup
-session = new_session("isnet-general-use")
+# Initialize session as None so it doesn't block startup
+session = None
 
 @app.post("/remove_bg")
 async def remove_bg(file: UploadFile = File(...)):
+    global session
+    if session is None:
+        print("First request: Downloading/Loading model into cache...")
+        session = new_session("isnet-general-use")
+        
     contents = await file.read()
     input_image = Image.open(io.BytesIO(contents))
     
