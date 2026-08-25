@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pillow
+transformers==4.39.3
+torch
+torchvision
+python-multipart
+scikit-image
+gradio
+rembg
+onnxruntime
